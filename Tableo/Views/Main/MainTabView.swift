@@ -14,38 +14,32 @@ struct MainTabView: View {
 
     var body: some View {
         TabView(selection: $navigationViewModel.selectedTab) {
-            NavigationStack(path: $navigationViewModel.homePath) {
-                HomeView()
-                    .navigationDestination(for: Route.self) { route in
-                        RouteView(route: route)
-                    }
+            Tab("Start", systemImage: "house.fill", value: AppTab.home) {
+                NavigationStack(path: $navigationViewModel.homePath) {
+                    HomeView()
+                        .navigationDestination(for: Route.self) { route in
+                            RouteView(route: route)
+                        }
+                }
             }
-            .tabItem {
-                Label("Start", systemImage: "house.fill")
-            }
-            .tag(AppTab.home)
 
-            NavigationStack(path: $navigationViewModel.ordersPath) {
-                MyOrdersView()
-                    .navigationDestination(for: Route.self) { route in
-                        RouteView(route: route)
-                    }
+            Tab("Bestellungen", systemImage: "list.bullet", value: AppTab.orders) {
+                NavigationStack(path: $navigationViewModel.ordersPath) {
+                    MyOrdersView()
+                        .navigationDestination(for: Route.self) { route in
+                            RouteView(route: route)
+                        }
+                }
             }
-            .tabItem {
-                Label("Bestellungen", systemImage: "list.bullet")
-            }
-            .tag(AppTab.orders)
 
-            NavigationStack(path: $navigationViewModel.settingsPath) {
-                SettingsView()
-                    .navigationDestination(for: Route.self) { route in
-                        RouteView(route: route)
-                    }
+            Tab("Konto", systemImage: "person.crop.circle.fill", value: AppTab.settings) {
+                NavigationStack(path: $navigationViewModel.settingsPath) {
+                    SettingsView()
+                        .navigationDestination(for: Route.self) { route in
+                            RouteView(route: route)
+                        }
+                }
             }
-            .tabItem {
-                Label("Konto", systemImage: "person.crop.circle.fill")
-            }
-            .tag(AppTab.settings)
         }
     }
 }
