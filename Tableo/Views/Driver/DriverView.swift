@@ -166,65 +166,6 @@ struct DriverView: View {
     }
 }
 
-/// Eine Lieferung im Fahrer-Bereich. Die Buttons kommen von außen,
-/// weil sie bei "Abholbereit" und "Meine Tour" verschieden sind
-struct DriverOrderCardView<Actions: View>: View {
-    let order: FireOrder
-    // Platz in der Tour, nil = keine Nummer
-    var position: Int?
-    @ViewBuilder let actions: () -> Actions
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            HStack {
-                if let position {
-                    Text("\(position)")
-                        .font(AppFont.labelLarge)
-                        .foregroundColor(AppColors.onPrimary)
-                        .frame(width: 28, height: 28)
-                        .background(AppColors.primary)
-                        .clipShape(Circle())
-                }
-
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(order.customerDisplayName)
-                        .font(AppFont.titleMedium)
-                    Group {
-                        if let address = order.deliveryAddress {
-                            Text(address)
-                        } else {
-                            Text("Keine Adresse")
-                        }
-                    }
-                    .font(AppFont.bodyMedium)
-                    .foregroundColor(AppColors.onSurfaceVariant)
-                }
-                .padding(.leading, position != nil ? 10 : 0)
-                .frame(maxWidth: .infinity, alignment: .leading)
-
-                StatusBadgeView(status: order.status)
-                    .padding(.leading, 8)
-            }
-
-            Text(order.itemsText)
-                .font(AppFont.bodySmall)
-                .foregroundColor(AppColors.onSurfaceVariant)
-
-            // wichtig für den Fahrer: muss er noch kassieren?
-            Text("\(order.totalPrice.euro) · \(order.paymentMethod.title)")
-                .font(AppFont.titleSmall)
-                .foregroundColor(AppColors.primary)
-
-            HStack(spacing: 8) {
-                actions()
-            }
-            .padding(.top, 6)
-        }
-        .padding(16)
-        .cardStyle()
-    }
-}
-
 #Preview {
     NavigationStack {
         DriverView(restaurantId: "1", restaurantName: "Shisha Lounge", driverName: "Omar")
