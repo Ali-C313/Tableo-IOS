@@ -185,38 +185,6 @@ struct OrderDetailView: View {
     }
 }
 
-/// Gleiche Karte für alle Abschnitte
-struct DetailCardView<Content: View>: View {
-    @ViewBuilder let content: () -> Content
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            content()
-        }
-        .padding(16)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .cardStyle(shadow: false)
-    }
-}
-
-/// Eine Zeile "Bezeichnung ... Wert"
-struct DetailRowView: View {
-    let label: LocalizedStringKey
-    let value: String
-
-    var body: some View {
-        HStack(alignment: .top) {
-            Text(label)
-                .foregroundColor(AppColors.onSurfaceVariant)
-            Spacer(minLength: 16)
-            Text(value)
-                .multilineTextAlignment(.trailing)
-        }
-        .font(AppFont.bodyMedium)
-        .padding(.vertical, 4)
-    }
-}
-
 #Preview {
     NavigationStack {
         OrderDetailView(orderId: "abc")
