@@ -31,6 +31,7 @@ struct RootView: View {
                     .transition(.opacity)
             }
         }
+        .animation(.default, value: settingsViewModel.onboardingCompleted)
         .id(settingsViewModel.language)
         .font(AppFont.bodyLarge)
         .tint(AppColors.primary)
