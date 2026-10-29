@@ -73,8 +73,7 @@ class AnalyticsViewModel: ObservableObject {
             let bucketOrders = relevant.filter { $0.createdAt >= bucketStart && $0.createdAt < bucketEnd }
             return ChartBucket(
                 label: formatter.string(from: Date(timeIntervalSince1970: Double(bucketStart) / 1000)),
-                revenue: bucketOrders.reduce(0) { $0 + $1.totalPrice },
-                orderCount: bucketOrders.count
+                revenue: bucketOrders.reduce(0) { $0 + $1.totalPrice }
             )
         }
         totalRevenue = relevant.reduce(0) { $0 + $1.totalPrice }
