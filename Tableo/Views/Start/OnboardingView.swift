@@ -46,14 +46,9 @@ struct OnboardingView: View {
                     title: "Wo genau befindest du dich?",
                     description: "Teile deinen Standort, damit wir dir Restaurants in deiner Nähe zeigen können.",
                     primaryButton: "Standort teilen",
-                    onPrimary: {
-                        // egal ob erlaubt oder nicht, es geht weiter
-                        LocationManager.shared.requestPermission { _ in
-                            finish()
-                        }
-                    },
+                    onPrimary: { settingsViewModel.finishOnboarding(askForLocation: true) },
                     secondaryButton: "Überspringen",
-                    onSecondary: { finish() }
+                    onSecondary: { settingsViewModel.finishOnboarding(askForLocation: false) }
                 ) {
                     Text("📍").font(.system(size: 57))
                 }
@@ -72,54 +67,6 @@ struct OnboardingView: View {
             .padding(.bottom, 24)
         }
         .screenBackground()
-    }
-
-    private func finish() {
-        withAnimation {
-            settingsViewModel.onboardingCompleted = true
-        }
-    }
-}
-
-/// Eine Seite im Onboarding: Bild, Titel, Text und ein oder zwei Buttons
-struct OnboardingPageView<Artwork: View>: View {
-
-    let title: LocalizedStringKey
-    let description: LocalizedStringKey
-    let primaryButton: LocalizedStringKey
-    let onPrimary: () -> Void
-    var secondaryButton: LocalizedStringKey?
-    var onSecondary: () -> Void = {}
-    @ViewBuilder let artwork: () -> Artwork
-
-    var body: some View {
-        VStack(spacing: 0) {
-            Spacer()
-            artwork()
-
-            Text(title)
-                .font(AppFont.headlineSmall)
-                .multilineTextAlignment(.center)
-                .padding(.top, 32)
-
-            Text(description)
-                .font(AppFont.bodyMedium)
-                .foregroundColor(AppColors.onSurfaceVariant)
-                .multilineTextAlignment(.center)
-                .padding(.top, 12)
-
-            Button(primaryButton, action: onPrimary)
-                .buttonStyle(PrimaryButtonStyle())
-                .padding(.top, 32)
-
-            if let secondaryButton {
-                Button(secondaryButton, action: onSecondary)
-                    .buttonStyle(OutlineButtonStyle())
-                    .padding(.top, 12)
-            }
-            Spacer()
-        }
-        .padding(32)
     }
 }
 
