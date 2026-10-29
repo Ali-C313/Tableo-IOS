@@ -60,22 +60,6 @@ struct OrderSummaryView: View {
     }
 }
 
-/// "Tisch 7", "Abholung um 19:30 Uhr" oder "Lieferung an ..."
-struct OrderTypeTextView: View {
-    let order: FireOrder
-
-    var body: some View {
-        switch order.orderType {
-        case .dineIn:
-            Text("Tisch \(order.tableNumber.map(String.init) ?? "")")
-        case .pickup:
-            Text("Abholung um \(order.pickupTime ?? "") Uhr")
-        case .delivery:
-            Text("Lieferung an \(order.deliveryAddress ?? "")")
-        }
-    }
-}
-
 #Preview {
     OrderSummaryView(order: FireOrder(
         restaurantId: "1", restaurantName: "Shisha Lounge", userId: nil, customerName: "Ali",
