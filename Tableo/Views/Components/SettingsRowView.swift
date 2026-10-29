@@ -52,64 +52,6 @@ struct SettingsRowView: View {
     }
 }
 
-/// Zeile mit Icon und Titel links, Auswahl rechts
-struct PickerRowView<Picker: View>: View {
-    let icon: String
-    let title: LocalizedStringKey
-    @ViewBuilder let picker: () -> Picker
-
-    var body: some View {
-        HStack {
-            Image(systemName: icon)
-                .font(.system(size: 18))
-                .foregroundColor(AppColors.onSurfaceVariant)
-                .frame(width: 24)
-                .padding(.trailing, 12)
-            Text(title)
-                .font(AppFont.bodyLarge)
-            Spacer()
-            picker()
-        }
-        .padding(.vertical, 6)
-    }
-}
-
-/// Mehrere Zeilen in einer abgerundeten Karte, wie in den iPhone-Einstellungen
-struct SettingsGroupView<Content: View>: View {
-    @ViewBuilder let content: () -> Content
-
-    var body: some View {
-        VStack(spacing: 0) {
-            content()
-        }
-        .padding(.horizontal, 16)
-        .cardStyle(shadow: false)
-    }
-}
-
-/// Überschrift für einen Bereich
-struct SectionTitleView: View {
-    let text: LocalizedStringKey
-
-    var body: some View {
-        Text(text)
-            .font(AppFont.titleMedium)
-            .foregroundColor(AppColors.onSurfaceVariant)
-            .padding(.leading, 4)
-            .padding(.top, 24)
-            .padding(.bottom, 8)
-    }
-}
-
-/// Dünne Linie zwischen zwei Zeilen
-struct GroupDividerView: View {
-    var body: some View {
-        Rectangle()
-            .fill(AppColors.onSurfaceVariant.opacity(0.15))
-            .frame(height: 0.5)
-    }
-}
-
 #Preview {
     VStack(alignment: .leading) {
         SectionTitleView(text: "Dein Konto")
