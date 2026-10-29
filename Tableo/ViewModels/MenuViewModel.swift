@@ -18,7 +18,6 @@ class MenuViewModel: ObservableObject {
 
     // Kurs von 1 Euro, z.B. ["USD": 1.08]
     @Published var rates: [String: Double] = [:]
-    @Published var ratesError: String?
 
     private let database = FirebaseManager.shared.database
     private var listener: ListenerRegistration?
@@ -56,9 +55,9 @@ class MenuViewModel: ObservableObject {
         Task {
             do {
                 rates = try await exchangeRateRepository.fetchRates(currencies: ["USD", "GBP", "TRY"])
-                ratesError = nil
             } catch {
-                ratesError = String(localized: "Wechselkurse nicht verfügbar", bundle: .appLanguage)
+                // ohne Kurse bleiben die Preise in Euro
+                print("Wechselkurse nicht geladen: \(error.localizedDescription)")
             }
         }
     }
