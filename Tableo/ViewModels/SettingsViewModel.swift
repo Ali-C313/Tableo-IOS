@@ -30,6 +30,17 @@ class SettingsViewModel: ObservableObject {
         onboardingCompleted = defaults.bool(forKey: "onboarding_completed")
     }
 
+    /// Fragt auf Wunsch nach dem Standort, egal ob erlaubt oder nicht geht es danach weiter
+    func finishOnboarding(askForLocation: Bool) {
+        guard askForLocation else {
+            onboardingCompleted = true
+            return
+        }
+        LocationManager.shared.requestPermission { _ in
+            self.onboardingCompleted = true
+        }
+    }
+
     /// Version aus der Info.plist, z.B. "1.0"
     var appVersion: String {
         Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
