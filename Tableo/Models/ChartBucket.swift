@@ -12,5 +12,4 @@ struct ChartBucket: Identifiable {
     let id = UUID()
     let label: String
     let revenue: Double
-    let orderCount: Int
 }
